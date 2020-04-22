@@ -1,0 +1,463 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "AnunciaLOL API user guide and tryout",
+    "version": "0.0.1",
+    "title": "AnunciaLOL"
+  },
+  "host": "anuncialol.swagger.io",
+  "basePath": "/v0",
+  "tags": [
+    {
+      "name": "ads",
+      "description": "Ad management: displaying and CRUD"
+    },
+    {
+      "name": "users",
+      "description": "Operations about user: register and login"
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/ads": {
+      "get": {
+        "tags": [
+          "ads"
+        ],
+        "summary": "display ads",
+        "description": " you can pass query strings to filter, sort, limit, skip and select fields.This way 'anuncialol.swagger.io/ads?title=house&price=-600000' would filter ads with a title 'house' and a price under 600000",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "type": "integer",
+            "description": "The numbers of items to return.",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "server/API error"
+          }
+        }
+      }
+    },
+    "/ads/{id}": {
+      "get": {
+        "tags": [
+          "ads"
+        ],
+        "summary": "display an Ad by its ID",
+        "description": "returnns a single AD",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "the id of the ad to be displayed",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          },
+          "404": {
+            "description": "not found"
+          },
+          "500": {
+            "description": "server/API error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ads"
+        ],
+        "summary": "update an AD. Need to be logged in and be the owner of the Ad",
+        "description": "change any information input or create a new one. For image (cover and pictures) management, there are explicit path operation",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "the changes to upload to the AD",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Ad"
+            }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "the id of the ad to be displayed",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          },
+          "401": {
+            "description": "user not logged in"
+          },
+          "500": {
+            "description": "server/API error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ads"
+        ],
+        "summary": "delete an Ad",
+        "description": "you must own the Ad and be logged in to delete an Ad. Deleting an Ad will also erase al pictures uploded to the API linked to it",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "the id of the ad to be displayed",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          },
+          "404": {
+            "description": "not found"
+          },
+          "500": {
+            "description": "server/API error"
+          }
+        }
+      }
+    },
+    "/ads/create": {
+      "post": {
+        "tags": [
+          "ads"
+        ],
+        "summary": "create and upload a new Ad",
+        "description": "you need to be logged in to create a new Ad. The Ad will be linked to the user ID so only the user can update or delete it.",
+        "consumes": [
+          "application/data-form"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "the Ad to be uploaded",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Ad"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          },
+          "401": {
+            "description": "user not logged in"
+          },
+          "500": {
+            "description": "server/API error"
+          }
+        }
+      }
+    },
+    "/ads/pics/{id}": {
+      "post": {
+        "tags": [
+          "ads"
+        ],
+        "summary": "ad pictures to Ad",
+        "description": "you need to own and be logged in to update a new Ad. The pictures upload will overwrite the pictures of the ad, so if you want to keep old pictures you should pass them on the array.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "picture1",
+            "required": true,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "picture2",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "picture3",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "picture4",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "picture5",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "picture6",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "picture7",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "picture8",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "the id of the ad to add images to",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          },
+          "401": {
+            "description": "user not logged in"
+          },
+          "500": {
+            "description": "server/API error"
+          }
+        }
+      }
+    },
+    "/ads/cover/{id}": {
+      "post": {
+        "tags": [
+          "ads"
+        ],
+        "summary": "modify cover picture of Ad",
+        "description": "you need to own and be logged in to update an Ad.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "the id of the ad to add images to",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "cover",
+            "description": "image to upload",
+            "required": true,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          },
+          "401": {
+            "description": "user not logged in"
+          },
+          "500": {
+            "description": "server/API error"
+          }
+        }
+      }
+    },
+    "/users/register": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Create user",
+        "description": "Create a user on the application",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          },
+          "500": {
+            "description": "server/API error"
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "User access to application",
+        "description": "it is necessaary to have access to user's ads in order to edit or delete. It creates a cookie on localStore with a session expiring date unless especified otherwise",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "user data",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          },
+          "500": {
+            "description": "server/API error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "remember": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Ad": {
+      "type": "object",
+      "required": [
+        "tile",
+        "price",
+        "type"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "house"
+        },
+        "price": {
+          "type": "integer",
+          "format": "int64",
+          "example": "60000"
+        },
+        "city": {
+          "type": "string",
+          "example": "Madrid"
+        },
+        "cover": {
+          "type": "string",
+          "example": "/ad_pics/485623354.jpeg"
+        },
+        "pictures": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "type": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

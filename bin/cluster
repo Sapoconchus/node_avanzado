@@ -1,0 +1,118 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require('../app');
+var debug = require('debug')('practica:server');
+var http = require('http');
+const cluster = require('cluster');
+const os = require('os');
+
+if(cluster.isMaster) {
+  //we are master
+  //launch self-clones (as many clones as cores the machine has)
+
+  //calculate core number
+
+  const numOfCores = os.cpus().length;
+  console.log(os.cpus());
+
+  for(let i = 0; i < numOfCores; i++) {
+    cluster.fork(); //lanza un clon
+  }
+
+  cluster.on('listening', (worker, adress) => {
+    console.log(`worker ${worker.id} with pid ${worker.process.pid} connected on ${adress.port}`);
+  });
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(`worker ${worker.id} with pid ${worker.process.pid} ended with code ${code} abd signal ${signal}`);
+
+    console.log('arranco nuevo cluster');
+    cluster.fork();
+  });
+
+} else { //if I am not master, but clon, launch the app as is
+
+  /**
+   * Get port from environment and store in Express.
+   */
+
+  var port = normalizePort(process.env.PORT || '3000');
+  app.set('port', port);
+
+  /**
+   * Create HTTP server.
+   */
+
+  var server = http.createServer(app);
+
+  /**
+   * Listen on provided port, on all network interfaces.
+   */
+
+  server.listen(port);
+  server.on('error', onError);
+  server.on('listening', onListening);
+
+  /**
+   * Normalize a port into a number, string, or false.
+   */
+
+  function normalizePort(val) {
+    var port = parseInt(val, 10);
+
+    if (isNaN(port)) {
+      // named pipe
+      return val;
+    }
+
+    if (port >= 0) {
+      // port number
+      return port;
+    }
+
+    return false;
+  }
+
+  /**
+   * Event listener for HTTP server "error" event.
+   */
+
+  function onError(error) {
+    if (error.syscall !== 'listen') {
+      throw error;
+    }
+
+    var bind = typeof port === 'string'
+      ? 'Pipe ' + port
+      : 'Port ' + port;
+
+    // handle specific listen errors with friendly messages
+    switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+    }
+  }
+
+  /**
+   * Event listener for HTTP server "listening" event.
+   */
+
+  function onListening() {
+    var addr = server.address();
+    var bind = typeof addr === 'string'
+      ? 'pipe ' + addr
+      : 'port ' + addr.port;
+    debug('Listening on ' + bind);
+  }
+}

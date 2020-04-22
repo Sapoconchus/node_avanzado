@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/reset.css' />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/home.css' />
+    
+  </head>
+  <body>
+    <nav>
+      <h1 class="logo"><a href="/"><%= title %> </a></h1>
+      <p>Welcome to <%= title %>. This is a little trial, a taste of what you can do with the Api.</p>
+      <p>Go ahead and pass as many queries as you want directly on your browser's searchbar</p>
+    </nav>
+
+    <div class="ad-wrapper">
+        <div class="card single-card" style="width: 18rem;">
+            <img src="<%= ad.cover %>" class="card-img-top" alt="cover picture">
+            <div class="card-body">
+              <h4 class="card-title"><%= ad.title %></h4>
+              <p class="card-text">description: <%= ad.description %></p>
+              <p class="card-price">price: <%= ad.price %>€</p>
+              <p class="card-text">tags: <%= ad.tags %></p>
+
+              <% if(ad.pictures.length > 0) { %> 
+
+                <div class="pics-grid">
+                   <% ad.pictures.map((pic, index) => { %>
+                    <img src="../<%= pic %>" id="<%= index %>-pic" class="ad-picture">
+                <%  })%>
+              <%  } %>
+
+              <a href="http://localhost:3000/view" class="btn btn-primary">Return to Ads Board</a>
+            </div>
+          </div>    
+    </div>
+
+    
+  </body>
+</html>

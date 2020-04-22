@@ -1,0 +1,55 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+.ads-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: flex-start;
+  margin-top: 140px;
+}
+nav {
+  display: fixed;
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  padding: 10px;
+  color: white;
+  border-bottom: 1px solid white;
+
+}
+nav p {
+  font-size: 1.25rem;
+}
+
+/* single ad styles */
+
+.ad-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 140px;
+}
+
+.ad-wrapper .single-card {
+  min-width: 70vw;
+}
+
+.single-card .pics-grid {
+  overflow: hidden;
+}
+
+.pics-grid .ad-picture {
+  max-width: 100%;
+  margin: 15px auto;
+}
+

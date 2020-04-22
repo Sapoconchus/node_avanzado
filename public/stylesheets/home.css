@@ -1,0 +1,13 @@
+body {
+    background-color: darkslategrey;
+}
+.logo {
+    font-size: 3rem;
+
+    display: block;
+    align-self: center;
+}
+.logo a {
+    text-decoration: none;
+    color: lightcoral;
+}
