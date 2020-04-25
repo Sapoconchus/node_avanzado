@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const session = require('express-session');
 
 var app = express();
 
@@ -36,7 +37,23 @@ app.use('/api/documentation', require('./routes/api/documentation/swagger-doc'))
 
 //website routes
 
+/**
+ * Sistema de sesiones
+ */
+app.use(session({
+  name: 'anunciaLOL-session',
+  secret: process.env.SESSION_SECRET, //esto te lo inventas. Es para "despistar" em la cookie del user
+  saveUninitialized: true,
+  resave: false,
+  cookie: {
+    secure: false, //https solo??
+    maxAge: 1000*60*60*24 //caducidad por inactividad
+  } 
+}));
+
+const sessionAuth = require('./lib/sessionAuth');
 const loginController = require('./routes/loginController');
+const privadoController = require('./routes/privadoController');
 
 app.use('/',      require('./routes/index'));
 app.use('/view',      require('./routes/view'));
@@ -44,6 +61,9 @@ app.use('/users', require('./routes/users'));
 
 app.get('/login', loginController.index);
 app.post('/login', loginController.post);
+app.get('/logout', loginController.logout);
+
+app.get('/privado', sessionAuth, privadoController.index);
 
 
 // catch 404 and forward to error handler

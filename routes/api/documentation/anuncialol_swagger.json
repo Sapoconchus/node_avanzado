@@ -5,8 +5,8 @@
     "version": "0.0.1",
     "title": "AnunciaLOL"
   },
-  "host": "anuncialol.swagger.io",
-  "basePath": "/v0",
+  "host": "localhost:3000",
+  "basePath": "/api",
   "tags": [
     {
       "name": "ads",
@@ -18,8 +18,7 @@
     }
   ],
   "schemes": [
-    "https",
-    "http"
+    "https"
   ],
   "produces": [
     "application/json"
@@ -67,9 +66,7 @@
         ],
         "summary": "display an Ad by its ID",
         "description": "returnns a single AD",
-        "consumes": [
-          "application/x-www-form-urlencoded"
-        ],
+        "operationId": "getAdById",
         "produces": [
           "application/json"
         ],
@@ -332,7 +329,7 @@
         }
       }
     },
-    "/users/register": {
+    "/user/register": {
       "post": {
         "tags": [
           "users"
@@ -341,6 +338,9 @@
         "description": "Create a user on the application",
         "produces": [
           "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
         ],
         "parameters": [
           {
@@ -363,7 +363,7 @@
         }
       }
     },
-    "/users/login": {
+    "/user/login": {
       "post": {
         "tags": [
           "users"
@@ -372,6 +372,9 @@
         "description": "it is necessaary to have access to user's ads in order to edit or delete. It creates a cookie on localStore with a session expiring date unless especified otherwise",
         "produces": [
           "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
         ],
         "parameters": [
           {

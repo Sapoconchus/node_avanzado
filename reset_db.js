@@ -1,10 +1,11 @@
 'use strict';
+require('dotenv').config();
 
 const conn = require('./lib/connectMongoose');
 const Ad = require('./models/Ad');
 const User = require('./models/User');
 //require('mongodb');
-const pics = require('./picture_remover')
+const pics = require('./picture_remover');
 
 conn.once('open', async() => {
   try{
@@ -51,6 +52,12 @@ const initUsers = async() => {
       '_id': '5e6e8e074763f31a1ad53674',
       'username': 'Admin',
       'email': 'test@test.com',
+      'password': await User.hashPassword('admin'),
+    },
+    {
+      '_id': '5e6e8e074763f31a1ad53675',
+      'username': 'Administrator',
+      'email': 'mavidalma@gmail.com',
       'password': await User.hashPassword('admin'),
     }
   ]);

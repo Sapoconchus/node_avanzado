@@ -19,7 +19,7 @@ class LoginController {
   
       console.log(email, password);
   
-      const user = await User.findOne({email})
+      const user = await User.findOne({email});
   
       if (!user || !await bcrypt.compare(password, user.password)) {
         res.locals.email = email;
@@ -27,14 +27,28 @@ class LoginController {
         res.render('login');
         return;
       }
-      
-      res.redirect('/view');
-      
-      
 
+      req.session.authUser = user._id;
+
+      res.redirect('/privado');
+      
+      //mando mail por probar el servicio
+
+      await user.sendEmail(process.env.ADMIN_EMAIL, 'new login', 
+      'We are glad to seeing you again on our API. Cheers!');
     } catch(err) {
       next(err);
     }
+  }
+
+  logout(req, res, next){
+    req.session.regenerate(err => {
+      if(err) {
+        next(err);
+        return;
+      }
+      res.redirect('/');
+    });
   }
 }
 
