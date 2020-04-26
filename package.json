@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./bin/www",
-    "dev": "cross-env DEBUG=practica:* NODE_ENV=development nodemon ./bin/www",
+    "dev": "cross-env DEBUG=nodeLOL:* NODE_ENV=development nodemon ./bin/www",
     "cluster": "node ./bin/cluster",
     "reset_db": "node reset_db.js",
     "pic_rm": "node picture_remover.js",
@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "bcrypt": "^4.0.1",
+    "connect-mongo": "^3.2.0",
     "cookie-parser": "~1.4.4",
     "cross-env": "^7.0.2",
     "debug": "~2.6.9",

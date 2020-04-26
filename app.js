@@ -4,12 +4,13 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 var app = express();
 
 //connect mongoose for mongodb
 
-require('./lib/connectMongoose');
+const mongooseConnection = require('./lib/connectMongoose');
 
 const i18n = require('./lib/i18nConfigure')(); //porque i18n exporta una función que configura i18n
 app.use(i18n.init);
@@ -48,7 +49,8 @@ app.use(session({
   cookie: {
     secure: false, //https solo??
     maxAge: 1000*60*60*24 //caducidad por inactividad
-  } 
+  },
+  store: new MongoStore({mongooseConnection}),
 }));
 
 const sessionAuth = require('./lib/sessionAuth');
