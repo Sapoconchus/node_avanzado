@@ -2,10 +2,10 @@
 
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const nodemailer = require('nodemailer');
+const nodemailertransport = require('../lib/nodemailerServiceTransport');
 
 const userSchema = mongoose.Schema({
-  username: { type: String, unique: true},
+  username: { type: String, unique: true},  //unique true hace que no puedas meter duplicados (al hacer el indice) -- puedes poner index:true e index sin reparos
   email: { type: String, unique: true},
   password: String,
 });
@@ -16,23 +16,32 @@ userSchema.statics.hashPassword = function(plainPassword) {
 
 userSchema.methods.sendEmail = async function(from, subject, body) {
 
-  let testAccount = await nodemailer.createTestAccount();
-
-  const transport = nodemailer.createTransport({
-    service: process.env.MAIL_SERVICE,
-    auth: {
-      user: process.env.EMAIL_SERVICE_USER, 
-      pass: process.env.EMAIL_SERVICE_PASS
-    }
-  });
-
- await transport.sendMail({
+  await nodemailertransport.sendMail({
     from, // sender address
     to: this.email, // list of receivers
     subject, // Subject line
     html: body,
   });
-}
+};
+
+/*
+//findUser service
+
+const responder = new cote.Responder({
+  name: 'user services'
+});
+
+responder.on('find user', async (req, send) => {
+  const email = req.email;
+  const password = req.password;
+
+  const user = await User.findOne({email});
+  console.log(user);
+  
+  (!user || !await bcrypt.compare(password, user.password)) ? send(false) : send(user);
+});
+
+*/
 
 const User = mongoose.model('User',userSchema);
 

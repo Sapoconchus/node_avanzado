@@ -18,7 +18,18 @@ class LoginController {
       const password = req.body.password;
   
       console.log(email, password);
-  
+ 
+      /*
+      const caller = new cote.Requester({
+        name: 'findUser'
+      });
+
+      const user = await caller.send({
+        type: 'find user',
+        email,
+        password
+      });
+*/
       const user = await User.findOne({email});
   
       if (!user || !await bcrypt.compare(password, user.password)) {
