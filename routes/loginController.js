@@ -2,6 +2,7 @@
 
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const getUser = require('../lib/coteRequester')
 
 class LoginController {
 
@@ -19,19 +20,10 @@ class LoginController {
   
       console.log(email, password);
  
-      /*
-      const caller = new cote.Requester({
-        name: 'findUser'
-      });
+      const response = await getUser(email, password); //await User.findOne({email});
+      const user = JSON.parse(response);
+      console.log('login controller: ', user)
 
-      const user = await caller.send({
-        type: 'find user',
-        email,
-        password
-      });
-*/
-      const user = await User.findOne({email});
-  
       if (!user || !await bcrypt.compare(password, user.password)) {
         res.locals.email = email;
         res.locals.error = res.__('ivalid user');
