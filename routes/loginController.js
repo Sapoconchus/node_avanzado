@@ -2,6 +2,8 @@
 
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const getUSer = require('../lib/coteRequester');
+const jwt = require('jsonwebtoken');
 
 class LoginController {
 
@@ -30,7 +32,7 @@ class LoginController {
         password
       });
 */
-      const user = await User.findOne({email});
+      const user = await getUSer(email, password); //await User.findOne({email});
   
       if (!user || !await bcrypt.compare(password, user.password)) {
         res.locals.email = email;
@@ -46,7 +48,7 @@ class LoginController {
       //mando mail por probar el servicio
 
       await user.sendEmail(process.env.ADMIN_EMAIL, 'new login', 
-      'We are glad to seeing you again on our API. Cheers!');
+        'We are glad to seeing you again on our API. Cheers!');
     } catch(err) {
       next(err);
     }
@@ -60,6 +62,31 @@ class LoginController {
       }
       res.redirect('/');
     });
+  }
+
+  async postJWT (req, res, next){
+    try {
+  
+      const email = req.body.email;
+      const password = req.body.password;
+  
+      console.log(email, password);
+  
+      const user = await User.findOne({email});
+  
+      if (!user || !await bcrypt.compare(password, user.password)) {
+        const error = new Error('invalid credentials');
+        error.status = 401;
+        next(error);
+        return;
+      }
+      const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET, {expiresIn: '2d'});
+
+      res.json({token})
+  
+    } catch(err) {
+      next(err);
+  }
   }
 }
 
