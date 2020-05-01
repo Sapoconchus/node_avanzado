@@ -6,7 +6,8 @@ var logger = require('morgan');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
-require('./lib/coteResponder');
+// el responder no debe arrancarlo nodeapi, debes arrancarlo por si mismo con node ./lib/coteResponder
+// require('./lib/coteResponder');
 
 var app = express();
 
