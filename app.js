@@ -6,6 +6,8 @@ var logger = require('morgan');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
+require('./lib/coteResponder');
+
 var app = express();
 
 //connect mongoose for mongodb
@@ -20,20 +22,25 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
 app.engine('html', require('ejs').__express);
 
-app.use(logger('dev'));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'bootstrap_template')));
+app.use(logger('dev'));
 
 //global variables
 app.locals.title = 'AnunciaLOL';
 
+
+const loginController = require('./routes/loginController');
+const apiKeyProtected = require('./lib/JWTAuth');
 //api routes
 
-app.use('/api/ads', require('./routes/api/ads'));
+app.use('/api/ads', apiKeyProtected(), require('./routes/api/ads'));
 app.use('/api/user', require('./routes/api/users'));
 app.use('/api/documentation', require('./routes/api/documentation/swagger-doc'));
+app.use('/api/login', loginController.postJWT);
 
 
 //website routes
@@ -54,11 +61,12 @@ app.use(session({
 }));
 
 const sessionAuth = require('./lib/sessionAuth');
-const loginController = require('./routes/loginController');
+const basicAuth = require('./lib/basicAuth');
+
 const privadoController = require('./routes/privadoController');
 
 app.use('/',      require('./routes/index'));
-app.use('/view',      require('./routes/view'));
+app.use('/view', basicAuth(),     require('./routes/view'));
 app.use('/users', require('./routes/users'));
 
 app.get('/login', loginController.index);
