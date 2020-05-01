@@ -2,12 +2,8 @@
 
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
-<<<<<<< HEAD
-const getUser = require('../lib/coteRequester')
-=======
-const getUSer = require('../lib/coteRequester');
+const getUser = require('../lib/coteRequester');
 const jwt = require('jsonwebtoken');
->>>>>>> bd7bd1c35fec35906c05a574b9e34cc81117ea25
 
 class LoginController {
 
@@ -22,20 +18,12 @@ class LoginController {
 
       const email = req.body.email;
       const password = req.body.password;
-  
-      console.log(email, password);
  
-      const response = await getUser(email, password); //await User.findOne({email});
-      const user = JSON.parse(response);
-      console.log('login controller: ', user)
+      const user = await getUser(email, password); //await User.findOne({email});
 
-      const user = await caller.send({
-        type: 'find user',
-        email,
-        password
-      });
+      console.log('logincontroller user: ', user)
       /*
-      const user = await getUSer(email, password); //await User.findOne({email});
+      const user = await User.findOne({email});
   
       if (!user || !await bcrypt.compare(password, user.password)) {
         res.locals.email = email;
