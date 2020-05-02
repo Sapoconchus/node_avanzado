@@ -21,7 +21,7 @@ class LoginController {
  
       const user = await getUser(email, password); //await User.findOne({email});
 
-      console.log('logincontroller user: ', user)
+      console.log('logincontroller user: ', user);
       /*
       const user = await User.findOne({email});
   
@@ -73,11 +73,11 @@ class LoginController {
       }
       const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET, {expiresIn: '2d'});
 
-      res.json({token})
+      res.json({token});
   
     } catch(err) {
       next(err);
-  }
+    }
   }
 }
 

@@ -6,8 +6,6 @@ var logger = require('morgan');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
-require('./lib/coteResponder');
-
 var app = express();
 
 //connect mongoose for mongodb
