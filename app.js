@@ -9,6 +9,7 @@ const MongoStore = require('connect-mongo')(session);
 var app = express();
 
 //connect mongoose for mongodb
+require('./services/users/coteResponder');
 
 const mongooseConnection = require('./lib/connectMongoose');
 

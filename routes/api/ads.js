@@ -75,7 +75,6 @@ router.get('/:id', async(req, res, next) => {
   try {
     const _id = req.params.id;
     const ad = await Ad.findOne({_id});
-    console.log(ad)
     res.json({ad});
   } catch(err) {
     next(err);

@@ -2,7 +2,7 @@
 
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
-const getUser = require('../lib/coteRequester');
+const caller = require('../services/coteRequester');
 const jwt = require('jsonwebtoken');
 
 class LoginController {
@@ -19,7 +19,7 @@ class LoginController {
       const email = req.body.email;
       const password = req.body.password;
  
-      const user = await getUser(email, password); //await User.findOne({email});
+      const user = await caller.findUser(email, password); //await User.findOne({email});
 
       console.log('logincontroller user: ', user);
       /*
@@ -37,9 +37,9 @@ class LoginController {
       res.redirect('/privado');
       
       //mando mail por probar el servicio
-
+/*
       await user.sendEmail(process.env.ADMIN_EMAIL, 'new login', 
-        'We are glad to seeing you again on our API. Cheers!');
+        'We are glad to seeing you again on our API. Cheers!');*/
     } catch(err) {
       next(err);
     }
