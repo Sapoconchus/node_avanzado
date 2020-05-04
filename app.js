@@ -10,6 +10,7 @@ var app = express();
 
 //connect mongoose for mongodb
 require('./services/users/coteResponder');
+require('./services/image_handler/coteResponder');
 
 const mongooseConnection = require('./lib/connectMongoose');
 
@@ -33,10 +34,9 @@ app.locals.title = 'AnunciaLOL';
 
 
 const loginController = require('./routes/loginController');
-const apiKeyProtected = require('./lib/JWTAuth');
 //api routes
 
-app.use('/api/ads', apiKeyProtected(), require('./routes/api/ads'));
+app.use('/api/ads', require('./routes/api/ads'));
 app.use('/api/user', require('./routes/api/users'));
 app.use('/api/documentation', require('./routes/api/documentation/swagger-doc'));
 app.use('/api/login', loginController.postJWT);
@@ -81,15 +81,23 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res) {
+app.use(function(err, req, res, next) {
+  
+  res.status(err.status || 500);
+  
+  if (req.originalUrl.startsWith('/api/')) {
+    res.json({ error: err.message });
+    return;
+  }
+  
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-  
+
   // render the error page
-  res.status(err.status || 500);
   res.render('error');
-  //res.send({'status': res.status, 'error': err.message});
 });
 
 module.exports = app;
+
+

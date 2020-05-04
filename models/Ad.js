@@ -3,10 +3,11 @@
 const mongoose = require('mongoose');
 
 const adSchema = mongoose.Schema({
-  title: String,
+  title: {type: String},
   price: Number,
-  description: mongoose.Schema.Types.Mixed,
+  description: {type: mongoose.Schema.Types.Mixed},
   cover: String,
+  thumb: String,
   pictures: Array,
   type: Boolean,
   city: String, 

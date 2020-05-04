@@ -8,7 +8,11 @@ const checkUser = new cote.Requester({
 
 const mailer = new cote.Requester({
   name: 'sendEmail'
-})
+});
+
+const thumbnail = new cote.Requester({
+  name: 'create thumbnail'
+});
 
 const findUser = async(email, password) => {
   
@@ -32,5 +36,13 @@ const sendMail = (from, to, subject, body) => {
   });
 };
 
+const createThumbnail = (originalPath, thumbnailPath) => {
+  return thumbnail.send({
+    type: 'create thumbnail',
+    path: originalPath,
+    thumb: thumbnailPath
+  });
+};
 
-module.exports = {findUser, sendMail};
+
+module.exports = {findUser, sendMail, createThumbnail};

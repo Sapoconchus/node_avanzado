@@ -51,8 +51,8 @@ const initUsers = async() => {
     {
       '_id': '5e6e8e074763f31a1ad53674',
       'username': 'Admin',
-      'email': 'test@test.com',
-      'password': await User.hashPassword('admin'),
+      'email': 'user@example.com',
+      'password': await User.hashPassword('1234'),
     },
     {
       '_id': 'Ee6e8e074763f31a1ad53675',

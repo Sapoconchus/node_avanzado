@@ -6,7 +6,8 @@ const Ad = require('../../models/Ad');
 const multer = require('multer');
 const fs = require('fs');
 var path = require('path');
-//const user = req.cookies.user VER SI ASÍ FUNCIONAN LOS CHECKERS
+const apiKeyProtected = require('../../lib/JWTAuth');
+const service = require('../../services/coteRequester');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -25,6 +26,9 @@ const upload = multer({storage: storage});
 router.get('/', async(req, res, next) => {
   try {
     const query = {};
+
+    console.log(req.originalUrl);
+    console.log(req.originalUrl.startsWith('/api/'));
 
     req.query.title ? query.title = req.query.title : '';
     req.query.city ? query.city = req.query.city : '';
@@ -52,11 +56,13 @@ router.get('/', async(req, res, next) => {
 
     const ads = await Ad.filter(query, limit, skip, sort, select);
     res.json({ads});
+
   } catch(err) {
     next(err);
   }
 });
 
+//get available tags
 router.get('/tags', async (req, res, next) => {
   try{
     console.log(req);
@@ -81,26 +87,9 @@ router.get('/:id', async(req, res, next) => {
   }
 });
 
-
-
-//cookie checker
-
-router.all('*', (req, res, next) => {
-  console.log('Cookies: ', req.cookies);
-
-  if (!req.cookies.user) {
-    const err = new Error('user not logged');
-    err.status = 401;
-    return next(err);
-  }
-
-  next();
-
-});
-
 // Post Ad
 
-router.post('/create', upload.fields([{name: 'cover', maxCount: 1}, {name: 'pictures', maxCount: 8}]), async function(req, res, next) {
+router.post('/create', apiKeyProtected(), upload.fields([{name: 'cover', maxCount: 1}, {name: 'pictures', maxCount: 8}]), async function(req, res, next) {
   try {
     const adData =  req.body;
 
@@ -111,12 +100,17 @@ router.post('/create', upload.fields([{name: 'cover', maxCount: 1}, {name: 'pict
       return next(err);
 
     } else {
-
       const cover = req.files.cover ? 'ad_pics/' + req.files.cover[0].filename : '';
+      const thumb = req.files.cover ? 'ad_pics/thumbnails/' + req.files.cover[0].filename : '';
       const pictures = req.files.pictures ? req.files.pictures.map(item => 'ad_pics/' + item.filename) : [];
-      const user = req.cookies.user;
-      const ad = new Ad({...adData, pictures, cover, user});
+      const user = req.apiAuthUserId;
+      const mail = req.apiAuthUserEmail;
+      const ad = new Ad({...adData, pictures, cover, thumb, user});
       const savedAd = await ad.save();
+
+      service.sendMail(process.env.ADMIN_EMAIL, mail, 'new ad created', 'the ad has been properly created'); 
+      req.files.cover ? service.createThumbnail(cover, thumb) : '';
+
 
       res.json({success: true, ad:savedAd});
 
@@ -130,11 +124,11 @@ router.post('/create', upload.fields([{name: 'cover', maxCount: 1}, {name: 'pict
 
 //update an Ad
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', apiKeyProtected(), async (req, res, next) => {
   try{
     const adData = req.body;
     const _id = req.params.id;
-    const user = req.cookies.user;
+    const user = req.apiAuthUserId;
       
     const ad = await Ad.findOne({_id});
 
@@ -154,12 +148,12 @@ router.put('/:id', async (req, res, next) => {
 });
 
 //update a cover of an ad
-router.post('/cover/:id', upload.single('cover'), async(req, res, next) => {
+router.post('/cover/:id', apiKeyProtected(), upload.single('cover'), async(req, res, next) => {
   try {
     const _id = req.params.id;
     const cover = {'cover': 'ad_pics/' + req.file.filename};
     const ad = await Ad.findOne({_id});
-    const user = req.cookies.user;
+    const user = req.apiAuthUserId;
 
     if (ad.user === user) {
       /*const updatedAd =*/ await Ad.findOneAndUpdate(_id, cover, {new:false});
@@ -177,13 +171,13 @@ router.post('/cover/:id', upload.single('cover'), async(req, res, next) => {
 });
 
 //update pictures of an ad
-router.post('/pics/:id', upload.array('pictures', 8), async(req, res, next) => {
+router.post('/pics/:id', apiKeyProtected(), upload.array('pictures', 8), async(req, res, next) => {
   try {
     //it overwrites ALL previous pictures with the ones posted. Might refactor
     const _id = req.params.id;
     const ad = await Ad.findOne({_id});
     const pictures = {'pictures': req.files.map(item => 'ad_pics/' + item.filename)};
-    const user = req.cookies.user;
+    const user = req.apiAuthUserId;
 
 
     if (ad.user === user) {
@@ -200,10 +194,10 @@ router.post('/pics/:id', upload.array('pictures', 8), async(req, res, next) => {
   
 });
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', apiKeyProtected(), async (req, res, next) => {
   try{
     const _id = req.params.id;
-    const user = req.cookies.user;
+    const user = req.apiAuthUserId;
     const ad = await Ad.findOne({_id});
     const cover = ad.cover;
     const pictures = ad.pictures;

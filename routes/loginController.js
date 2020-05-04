@@ -71,7 +71,7 @@ class LoginController {
         next(error);
         return;
       }
-      const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET, {expiresIn: '2d'});
+      const token = jwt.sign({_id: user._id, email: user.email}, process.env.JWT_SECRET, {expiresIn: '2d'});
 
       res.json({token});
   
