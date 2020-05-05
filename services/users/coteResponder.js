@@ -19,7 +19,7 @@ responder.on('find user', async (req) => {
   
     if (!user || !await bcrypt.compare(password, user.password)) {
       const error = new Error('invalid user or password');
-      error.status = 401
+      error.status = 401;
       return error;
     }
     // (!user || !await bcrypt.compare(password, user.password)) ? send(false) : send(user);
@@ -44,7 +44,7 @@ responder.on('send email', async (req) => {
 
 });
 
-responder.on('create thumbnail', req => {
+responder.on('create thumbnail', async (req) => {
   try {
     const path = './public/' + req.path;
     const thumb = './public/' + req.thumb;
@@ -52,14 +52,25 @@ responder.on('create thumbnail', req => {
     console.log(thumb);
 
 
-    fs.copyFileSync(path, thumb);
+   // fs.copyFileSync(path, thumb);
     
-    jimp.read(path)
-      .then(cover => {
+    /* const pic = await jimp.read(thumb);
+    console.log(pic);
+    pic.cover(100, 100);
+*/
+
+    jimp.read(path, (err, picture) => {
+      if(err) throw err;
+      picture.resize(100, 100)
+        .write(thumb);
+    });
+
+
+    /* .then(cover => >{
         return cover
-          .resize(100,100)
+          .resize(100,100);
       })
-      .then(console.log('resized'))
+      .then(console.log('resized'));*/
 
 
   } catch(err) {

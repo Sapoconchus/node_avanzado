@@ -101,15 +101,15 @@ router.post('/create', apiKeyProtected(), upload.fields([{name: 'cover', maxCoun
 
     } else {
       const cover = req.files.cover ? 'ad_pics/' + req.files.cover[0].filename : '';
-      const thumb = req.files.cover ? 'ad_pics/thumbnails/' + req.files.cover[0].filename : '';
+      const thumbnail = req.files.cover ? 'thumbnails/' + req.files.cover[0].filename : '';
       const pictures = req.files.pictures ? req.files.pictures.map(item => 'ad_pics/' + item.filename) : [];
       const user = req.apiAuthUserId;
       const mail = req.apiAuthUserEmail;
-      const ad = new Ad({...adData, pictures, cover, thumb, user});
+      const ad = new Ad({...adData, pictures, cover, thumbnail, user});
       const savedAd = await ad.save();
 
       service.sendMail(process.env.ADMIN_EMAIL, mail, 'new ad created', 'the ad has been properly created'); 
-      req.files.cover ? service.createThumbnail(cover, thumb) : '';
+      req.files.cover ? service.createThumbnail(cover, thumbnail) : '';
 
 
       res.json({success: true, ad:savedAd});
@@ -201,7 +201,8 @@ router.delete('/:id', apiKeyProtected(), async (req, res, next) => {
     const ad = await Ad.findOne({_id});
     const cover = ad.cover;
     const pictures = ad.pictures;
-    const allPics = [...pictures, cover];
+    const thumbnail = ad.thumbnail;
+    const allPics = [...pictures, cover, thumbnail];
         
     if (ad.user === user) {
       allPics.forEach(path => fs.unlinkSync('./public/' + path));
