@@ -10,7 +10,7 @@ var app = express();
 
 //connect mongoose for mongodb
 require('./services/users/coteResponder');
-require('./services/image_handler/coteResponder');
+//require('./services/image_handler/coteResponder');
 
 const mongooseConnection = require('./lib/connectMongoose');
 

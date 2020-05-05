@@ -8,8 +8,8 @@ const responder = new cote.Responder({name: 'thumb creator'});
 
 responder.on('create thumbnail', req => {
   try {
-    const path = req.cover;
-    const thumb = req.thumb;
+    const path = './public/' + req.cover;
+    const thumb = './public/' + req.thumb;
     console.log(thumb);
     fs.copyFileSync(path, thumb);
     /*

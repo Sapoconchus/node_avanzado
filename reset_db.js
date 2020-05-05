@@ -11,7 +11,6 @@ conn.once('open', async() => {
   try{
     await initAds();
     await initUsers();
-    //db.ads.createIndex({description: 'text'});
     conn.close();
     pics;
     

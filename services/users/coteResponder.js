@@ -4,6 +4,7 @@ const cote = require('cote');
 const User = require('../../models/User');
 const bcrypt = require('bcrypt');
 const fs = require('fs');
+const jimp = require('jimp');
 
 const responder = new cote.Responder({name: 'user mgmt'});
 
@@ -45,20 +46,21 @@ responder.on('send email', async (req) => {
 
 responder.on('create thumbnail', req => {
   try {
-    const path = req.path;
-    const thumb = req.thumb;
+    const path = './public/' + req.path;
+    const thumb = './public/' + req.thumb;
     console.log(path);
     console.log(thumb);
 
 
     fs.copyFileSync(path, thumb);
-    /*
+    
     jimp.read(path)
       .then(cover => {
         return cover
           .resize(100,100)
       })
-*/
+      .then(console.log('resized'))
+
 
   } catch(err) {
     return err;
