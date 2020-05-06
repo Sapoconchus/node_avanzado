@@ -27,7 +27,7 @@ app.engine('html', require('ejs').__express);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'bootstrap_template')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));
 
 //global variables
@@ -35,6 +35,7 @@ app.locals.title = 'AnunciaLOL';
 
 
 const loginController = require('./routes/loginController');
+
 //api routes
 
 app.use('/api/ads', require('./routes/api/ads'));
@@ -61,13 +62,13 @@ app.use(session({
 }));
 
 const sessionAuth = require('./lib/sessionAuth');
-const basicAuth = require('./lib/basicAuth');
-
+const siteController = require('./routes/siteController');
 const privadoController = require('./routes/privadoController');
 
-app.use('/',      require('./routes/index'));
-app.use('/view', basicAuth(),     require('./routes/view'));
+app.get('/',      siteController.index);
+app.use('/view',     require('./routes/view'));
 app.use('/users', require('./routes/users'));
+app.get('/documentation', siteController.documentation);
 
 app.get('/login', loginController.index);
 app.post('/login', loginController.post);
