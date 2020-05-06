@@ -1,5 +1,7 @@
 'use strict';
 
+require('dotenv').config();
+
 const cote = require('cote');
 const User = require('../../models/User');
 const bcrypt = require('bcrypt');

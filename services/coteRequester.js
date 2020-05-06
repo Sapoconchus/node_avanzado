@@ -31,7 +31,7 @@ const findUser = async(email, password) => {
 
 const sendMail = (from, to, subject, body) => {
   return mailer.send({
-    type: "send email",
+    type: 'send email',
     from,
     to,
     subject,

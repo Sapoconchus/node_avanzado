@@ -9,7 +9,9 @@
     "reset_db": "node reset_db.js",
     "pic_rm": "node picture_remover.js",
     "lint": " node ./node_modules/.bin/eslint --init",
-    "swagger": "node ./swagger-server npm start"
+    "swagger": "node ./swagger-server npm start",
+    "mailer": "node ./services/mailing/coteResponder.js",
+    "resizer": "node ./services/image_handler/coteResponder.js"
   },
   "dependencies": {
     "basic-auth": "^2.0.1",
