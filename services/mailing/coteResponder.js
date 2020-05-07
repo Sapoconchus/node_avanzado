@@ -4,7 +4,7 @@ require('dotenv').config();
 
 const cote = require('cote');
 const User = require('../../models/User');
-const mongoose = require('mongoose');
+const mongoose = require('../../lib/connectMongoose');
 const nodemailer = require('nodemailer');
 
 const responder = new cote.Responder({
@@ -20,7 +20,7 @@ responder.on('send email', async (req) => {
     const email = req.to;
   
     console.log('emailer recieved: ', from, subject, body, email);
-  
+  /*
     const transport = nodemailer.createTransport({
       service: process.env.MAIL_SERVICE,
       auth: {
@@ -36,14 +36,15 @@ responder.on('send email', async (req) => {
       html: body,
     });
     return;
-    /*
+    */
+    
     const user = await User.findOne({email});
   
     console.log('user on responder retrieved: ', user);
   
   
-    return user.sendEmail(from, subject, body);
-*/
+    return user.sendEmail(from, email, subject, body);
+
   } catch(err) {
     return err;
   }
