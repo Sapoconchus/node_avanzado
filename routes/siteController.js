@@ -17,6 +17,23 @@ class SiteController {
       next(err);
     }
   };
+
+  language(req, res, next) {
+    try {
+      //const lang = req.cookies('anunciaLOL_lang');
+      req.cookies.siteLanguage = "en";
+      console.log(req.cookies);
+
+      req.session.locale = "en";
+      
+
+      res.redirect(req.get('referer'))
+    } catch(err) {
+      next(err);
+    }
+  };
+
+
 }
 
 module.exports = new SiteController();

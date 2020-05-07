@@ -66,9 +66,11 @@ const siteController = require('./routes/siteController');
 const privadoController = require('./routes/privadoController');
 
 app.get('/',      siteController.index);
+app.get('/documentation', siteController.documentation);
+app.get('/change-lang', siteController.language);
 app.use('/view',     require('./routes/view'));
 app.use('/users', require('./routes/users'));
-app.get('/documentation', siteController.documentation);
+
 
 app.get('/login', loginController.index);
 app.post('/login', loginController.post);
