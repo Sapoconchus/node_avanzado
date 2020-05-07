@@ -11,7 +11,10 @@
     "lint": " node ./node_modules/.bin/eslint --init",
     "swagger": "node ./swagger-server npm start",
     "mailer": "node ./services/mailing/coteResponder.js",
-    "resizer": "node ./services/image_handler/coteResponder.js"
+    "resizer": "node ./services/image_handler/coteResponder.js",
+    "pm2_start": "pm2 start ecosystem.config.js",
+    "pm2_stop": "pm2 stop ecosystem.config.js",
+    "pm2_delete": "pm2 delete ecosystem.config.js"
   },
   "dependencies": {
     "basic-auth": "^2.0.1",

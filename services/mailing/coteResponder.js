@@ -5,7 +5,7 @@ require('dotenv').config();
 const cote = require('cote');
 const User = require('../../models/User');
 const mongoose = require('../../lib/connectMongoose');
-const nodemailer = require('nodemailer');
+const nodemailer = require('../../lib/nodemailerServiceTransport');
 
 const responder = new cote.Responder({
   name: 'mail deliverer',
@@ -36,14 +36,17 @@ responder.on('send email', async (req) => {
       html: body,
     });
     return;
+
     */
-    
+
     const user = await User.findOne({email});
   
     console.log('user on responder retrieved: ', user);
   
   
-    return user.sendEmail(from, email, subject, body);
+    await user.sendEmail(from, subject, body);
+
+    return;
 
   } catch(err) {
     return err;
