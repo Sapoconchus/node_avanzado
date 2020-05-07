@@ -22,6 +22,7 @@ userSchema.methods.sendEmail = async function(from, subject, body) {
     subject, // Subject line
     html: body,
   });
+  return;
 };
 
 const User = mongoose.model('User',userSchema);

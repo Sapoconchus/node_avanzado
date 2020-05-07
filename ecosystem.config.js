@@ -4,13 +4,11 @@ module.exports = {
     script: './services/image_handler/coteResponder.js',
     instances: 1,
     watch: './services/image_handler/coteResponder.js',
-    log_file: 'service.log'
   }, {
     name: 'mailer',
     script: './services/mailing/coteResponder.js',
     instances: 1,
     watch: './services/mailing/coteResponder.js',
-    log_file: 'service.log'
   }],
 
   deploy : {
