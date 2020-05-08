@@ -4,30 +4,29 @@ var express = require('express');
 var router = express.Router();
 const service = require('../../services/coteRequester');
 const User = require('../../models/User');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 router.post('/login', async(req, res, next) => {
   try {
-
-    const username = req.body.username;
+  
+    const email = req.body.email;
     const password = req.body.password;
-    const rememberMe = req.body.remember;
-
-    const validated = await User.find({username, password});
-
-    if (validated[0] === undefined) {
-      const err = new Error('user not found or password incorrect');
-      err.status = 404;
-      return next(err);
+  
+    console.log(email, password);
+  
+    const user = await User.findOne({email});
+  
+    if (!user || !await bcrypt.compare(password, user.password)) {
+      const error = new Error('invalid credentials');
+      error.status = 401;
+      next(error);
+      return;
     }
+    const token = jwt.sign({_id: user._id, email: user.email}, process.env.JWT_SECRET, {expiresIn: '2d'});
 
-    if (rememberMe) {
-      res.cookie('user', validated[0]._id, { expires: new Date(Date.now() + 900000)});
-    } else {
-      res.cookie('user', validated[0]._id);
-    }
-
-    res.json({success: true, user:validated[0]});
-
+    res.json({token});
+  
   } catch(err) {
     next(err);
   }

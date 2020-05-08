@@ -25,9 +25,8 @@ responder.on('find user', async (req) => {
       error.status = 401;
       return error;
     }
-    // (!user || !await bcrypt.compare(password, user.password)) ? send(false) : send(user);
+    
     return user;
-    // resp(user);
 
   } catch(err) {
     return err;

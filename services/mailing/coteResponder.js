@@ -20,29 +20,12 @@ responder.on('send email', async (req) => {
     const email = req.to;
   
     console.log('emailer recieved: ', from, subject, body, email);
-/*
-    const transport = nodemailer.createTransport({
-      service: process.env.MAIL_SERVICE,
-      auth: {
-        user: process.env.EMAIL_SERVICE_USER, 
-        pass: process.env.EMAIL_SERVICE_PASS
-      }
-    });
-    
-    await transport.sendMail({
-      from, // sender address
-      to: email, // list of receivers
-      subject, // Subject line
-      html: body,
-    });
-    return;
-    */
-    
+
     const user = await User.findOne({email});
   
     console.log('user on responder retrieved: ', user);
 
-   await user.sendEmail(from, subject, body);
+    await user.sendEmail(from, subject, body);
 
   } catch(err) {
     return err;

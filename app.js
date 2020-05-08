@@ -40,7 +40,7 @@ const loginController = require('./routes/loginController');
 app.use('/api/ads', require('./routes/api/ads'));
 app.use('/api/user', require('./routes/api/users'));
 app.use('/api/documentation', require('./routes/api/documentation/swagger-doc'));
-app.use('/api/login', loginController.postJWT);
+//app.use('/api/login', loginController.postJWT);
 
 
 //website routes
