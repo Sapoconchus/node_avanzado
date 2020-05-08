@@ -15,9 +15,6 @@ var app = express();
 
 const mongooseConnection = require('./lib/connectMongoose');
 
-const i18n = require('./lib/i18nConfigure')(); //porque i18n exporta una función que configura i18n
-app.use(i18n.init);
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
@@ -27,14 +24,19 @@ app.engine('html', require('ejs').__express);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'bootstrap_template')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));
+
+//i18n init
+const i18n = require('./lib/i18nConfigure')(); //porque i18n exporta una función que configura i18n
+app.use(i18n.init);
 
 //global variables
 app.locals.title = 'AnunciaLOL';
 
 
 const loginController = require('./routes/loginController');
+
 //api routes
 
 app.use('/api/ads', require('./routes/api/ads'));
@@ -60,14 +62,22 @@ app.use(session({
   store: new MongoStore({mongooseConnection}),
 }));
 
-const sessionAuth = require('./lib/sessionAuth');
-const basicAuth = require('./lib/basicAuth');
+app.use((req, res, next) => {
+  res.locals.session = req.session;
+  next();
+});
 
+
+const sessionAuth = require('./lib/sessionAuth');
+const siteController = require('./routes/siteController');
 const privadoController = require('./routes/privadoController');
 
-app.use('/',      require('./routes/index'));
-app.use('/view', basicAuth(),     require('./routes/view'));
+app.get('/',      siteController.index);
+app.get('/documentation', siteController.documentation);
+app.get('/change-lang/:lang', siteController.language);
+app.use('/view',     require('./routes/view'));
 app.use('/users', require('./routes/users'));
+
 
 app.get('/login', loginController.index);
 app.post('/login', loginController.post);
