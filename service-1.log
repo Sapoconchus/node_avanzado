@@ -1,0 +1,76 @@
+connected to practica_intro_node
+[37m
+Hello! I'm[39m [37mmail deliverer[39m[90m#[39m[90m0a11915a-d8ed-4d77-a08c-38e84bba21eb[39m on [34m8001[39m [37m
+========================
+[39m
+mail deliverer > [35mservice[39m[32m.online[39m [37msendEmail[39m[90m#[39m[90m1a7df3e1-8de7-4768-81f4-a887dea8e69d[39m
+emailer recieved:  foo@example.com new ad created the ad has been properly created mavidalma@gmail.com
+user on responder retrieved:  {
+  _id: ee6e8e074763f31a1ad53675,
+  username: 'Administrator',
+  email: 'mavidalma@gmail.com',
+  password: '$2b$10$X.OemEXY3vqAS8EC0gxnGedPqVonY/Fc9FfV83GQlMOHxq5Zg13he',
+  __v: 0
+}
+mail deliverer > [35mservice[39m[31m.offline[39m [37msendEmail[39m[90m#[39m[90m1a7df3e1-8de7-4768-81f4-a887dea8e69d[39m
+mail deliverer > [35mservice[39m[32m.online[39m [37msendEmail[39m[90m#[39m[90md6b93870-d6ef-4bde-b7fa-6b606c08d373[39m
+emailer recieved:  foo@example.com new ad created the ad has been properly created mavidalma@gmail.com
+user on responder retrieved:  {
+  _id: ee6e8e074763f31a1ad53675,
+  username: 'Administrator',
+  email: 'mavidalma@gmail.com',
+  password: '$2b$10$rkiqrW/EghdlOuPuBoDN/uLWDT324HHu/Ul7mIQNK/dzWu.su05O6',
+  __v: 0
+}
+mail deliverer > [35mservice[39m[31m.offline[39m [37msendEmail[39m[90m#[39m[90md6b93870-d6ef-4bde-b7fa-6b606c08d373[39m
+mail deliverer > [35mservice[39m[32m.online[39m [37msendEmail[39m[90m#[39m[90md6b93870-d6ef-4bde-b7fa-6b606c08d373[39m
+connected to practica_intro_node
+[37m
+Hello! I'm[39m [37mmail deliverer[39m[90m#[39m[90m3c330320-4392-48cd-9ba5-fdd02603ebfa[39m on [34m8001[39m [37m
+========================
+[39m
+mail deliverer > [35mservice[39m[32m.online[39m [37msendEmail[39m[90m#[39m[90md6b93870-d6ef-4bde-b7fa-6b606c08d373[39m
+mail deliverer > [35mservice[39m[31m.offline[39m [37msendEmail[39m[90m#[39m[90md6b93870-d6ef-4bde-b7fa-6b606c08d373[39m
+mail deliverer > [35mservice[39m[32m.online[39m [37msendEmail[39m[90m#[39m[90md6b93870-d6ef-4bde-b7fa-6b606c08d373[39m
+connected to practica_intro_node
+[37m
+Hello! I'm[39m [37mmail deliverer[39m[90m#[39m[90m428b6808-44df-4196-bc82-6248f7f5a310[39m on [34m8002[39m [37m
+========================
+[39m
+mail deliverer > [35mservice[39m[32m.online[39m [37msendEmail[39m[90m#[39m[90m5774f0a0-667e-494b-8d46-9f1de59e06fd[39m
+mail deliverer > [35mservice[39m[32m.online[39m [37mmail deliverer[39m[90m#[39m[90m057271c9-a4f1-4690-a507-85859805f8fa[39m on [34m8000[39m
+mail deliverer > [35mservice[39m[32m.online[39m [37mmail deliverer[39m[90m#[39m[90m78983158-1624-4ed7-afee-491e6a07625a[39m on [34m8000[39m
+mail deliverer > [35mservice[39m[32m.online[39m [37msendEmail[39m[90m#[39m[90m1ba85cdc-8b12-40b0-a48f-7a08ebee8351[39m
+mail deliverer > [35mservice[39m[31m.offline[39m [37msendEmail[39m[90m#[39m[90m5774f0a0-667e-494b-8d46-9f1de59e06fd[39m
+mail deliverer > [35mservice[39m[31m.offline[39m [37mmail deliverer[39m[90m#[39m[90m057271c9-a4f1-4690-a507-85859805f8fa[39m on [34m8000[39m
+mail deliverer > [35mservice[39m[31m.offline[39m [37mmail deliverer[39m[90m#[39m[90m78983158-1624-4ed7-afee-491e6a07625a[39m on [34m8000[39m
+mail deliverer > [35mservice[39m[32m.online[39m [37mmail deliverer[39m[90m#[39m[90m78983158-1624-4ed7-afee-491e6a07625a[39m on [34m8000[39m
+mail deliverer > [35mservice[39m[31m.offline[39m [37msendEmail[39m[90m#[39m[90m1ba85cdc-8b12-40b0-a48f-7a08ebee8351[39m
+mail deliverer > [35mservice[39m[31m.offline[39m [37mmail deliverer[39m[90m#[39m[90m78983158-1624-4ed7-afee-491e6a07625a[39m on [34m8000[39m
+mail deliverer > [35mservice[39m[32m.online[39m [37msendEmail[39m[90m#[39m[90m1ba85cdc-8b12-40b0-a48f-7a08ebee8351[39m
+mail deliverer > [35mservice[39m[32m.online[39m [37mmail deliverer[39m[90m#[39m[90m78983158-1624-4ed7-afee-491e6a07625a[39m on [34m8000[39m
+mail deliverer > [35mservice[39m[31m.offline[39m [37msendEmail[39m[90m#[39m[90m1ba85cdc-8b12-40b0-a48f-7a08ebee8351[39m
+mail deliverer > [35mservice[39m[32m.online[39m [37msendEmail[39m[90m#[39m[90m1ba85cdc-8b12-40b0-a48f-7a08ebee8351[39m
+mail deliverer > [35mservice[39m[31m.offline[39m [37msendEmail[39m[90m#[39m[90m1ba85cdc-8b12-40b0-a48f-7a08ebee8351[39m
+mail deliverer > [35mservice[39m[32m.online[39m [37msendEmail[39m[90m#[39m[90m1ba85cdc-8b12-40b0-a48f-7a08ebee8351[39m
+mail deliverer > [35mservice[39m[31m.offline[39m [37mmail deliverer[39m[90m#[39m[90m78983158-1624-4ed7-afee-491e6a07625a[39m on [34m8000[39m
+mail deliverer > [35mservice[39m[31m.offline[39m [37msendEmail[39m[90m#[39m[90m1ba85cdc-8b12-40b0-a48f-7a08ebee8351[39m
+mail deliverer > [35mservice[39m[32m.online[39m [37msendEmail[39m[90m#[39m[90m1ba85cdc-8b12-40b0-a48f-7a08ebee8351[39m
+mail deliverer > [35mservice[39m[32m.online[39m [37mmail deliverer[39m[90m#[39m[90m78983158-1624-4ed7-afee-491e6a07625a[39m on [34m8000[39m
+mail deliverer > [35mservice[39m[31m.offline[39m [37msendEmail[39m[90m#[39m[90m1ba85cdc-8b12-40b0-a48f-7a08ebee8351[39m
+mail deliverer > [35mservice[39m[31m.offline[39m [37mmail deliverer[39m[90m#[39m[90m78983158-1624-4ed7-afee-491e6a07625a[39m on [34m8000[39m
+mail deliverer > [35mservice[39m[32m.online[39m [37msendEmail[39m[90m#[39m[90m1ba85cdc-8b12-40b0-a48f-7a08ebee8351[39m
+mail deliverer > [35mservice[39m[32m.online[39m [37mmail deliverer[39m[90m#[39m[90m78983158-1624-4ed7-afee-491e6a07625a[39m on [34m8000[39m
+mail deliverer > [35mservice[39m[31m.offline[39m [37mmail deliverer[39m[90m#[39m[90m78983158-1624-4ed7-afee-491e6a07625a[39m on [34m8000[39m
+mail deliverer > [35mservice[39m[32m.online[39m [37mmail deliverer[39m[90m#[39m[90m78983158-1624-4ed7-afee-491e6a07625a[39m on [34m8000[39m
+mail deliverer > [35mservice[39m[31m.offline[39m [37msendEmail[39m[90m#[39m[90m1ba85cdc-8b12-40b0-a48f-7a08ebee8351[39m
+mail deliverer > [35mservice[39m[32m.online[39m [37msendEmail[39m[90m#[39m[90m1ba85cdc-8b12-40b0-a48f-7a08ebee8351[39m
+mail deliverer > [35mservice[39m[31m.offline[39m [37mmail deliverer[39m[90m#[39m[90m78983158-1624-4ed7-afee-491e6a07625a[39m on [34m8000[39m
+mail deliverer > [35mservice[39m[32m.online[39m [37mmail deliverer[39m[90m#[39m[90m78983158-1624-4ed7-afee-491e6a07625a[39m on [34m8000[39m
+connected to practica_intro_node
+[37m
+Hello! I'm[39m [37mmail deliverer[39m[90m#[39m[90mf20a2fde-4d56-45fa-9516-770d6fdea8e8[39m on [34m8002[39m [37m
+========================
+[39m
+mail deliverer > [35mservice[39m[32m.online[39m [37mmail deliverer[39m[90m#[39m[90m78983158-1624-4ed7-afee-491e6a07625a[39m on [34m8000[39m
+mail deliverer > [35mservice[39m[32m.online[39m [37msendEmail[39m[90m#[39m[90m1ba85cdc-8b12-40b0-a48f-7a08ebee8351[39m

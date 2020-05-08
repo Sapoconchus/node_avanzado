@@ -3,15 +3,18 @@
 const cote = require('cote');
 
 const checkUser = new cote.Requester({
-  name: 'findUser'
+  name: 'findUser',
+  key: 'user checker'
 });
 
 const mailer = new cote.Requester({
-  name: 'sendEmail'
+  name: 'sendEmail',
+  key: 'mail service'
 });
 
 const thumbnail = new cote.Requester({
-  name: 'create thumbnail'
+  name: 'create thumbnail',
+  key: 'picture handling'
 });
 
 const findUser = async(email, password) => {
@@ -28,7 +31,7 @@ const findUser = async(email, password) => {
 
 const sendMail = (from, to, subject, body) => {
   return mailer.send({
-    type: "send email",
+    type: 'send email',
     from,
     to,
     subject,

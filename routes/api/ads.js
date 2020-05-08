@@ -108,12 +108,12 @@ router.post('/create', apiKeyProtected(), upload.fields([{name: 'cover', maxCoun
       const ad = new Ad({...adData, pictures, cover, thumbnail, user});
       const savedAd = await ad.save();
 
-      service.sendMail(process.env.ADMIN_EMAIL, mail, 'new ad created', 'the ad has been properly created'); 
-      req.files.cover ? service.createThumbnail(cover, thumbnail) : '';
 
 
       res.json({success: true, ad:savedAd});
 
+      service.sendMail(process.env.ADMIN_EMAIL, mail, 'new ad created', 'the ad has been properly created'); 
+      req.files.cover ? service.createThumbnail(cover, thumbnail) : '';
     }
 
   } catch(err) {
