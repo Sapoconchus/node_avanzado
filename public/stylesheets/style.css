@@ -14,6 +14,7 @@ a {
   align-items: flex-start;
   margin-top: 140px;
 }
+
 nav {
   display: fixed;
   position: absolute;
@@ -23,10 +24,14 @@ nav {
   padding: 10px;
   color: white;
   border-bottom: 1px solid white;
-
 }
 nav p {
   font-size: 1.25rem;
+}
+
+.language-toggle {
+  display: flex;
+  flex-direction: row;
 }
 
 /* single ad styles */

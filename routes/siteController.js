@@ -21,13 +21,13 @@ class SiteController {
   language(req, res, next) {
     try {
       //const lang = req.cookies('anunciaLOL_lang');
-      req.cookies.siteLanguage = "en";
+      const lang = req.params.lang;
       console.log(req.cookies);
 
-      req.session.locale = "en";
-      
+      res.cookie('siteLanguage', lang, {maxAge: 1000 * 60 *60 * 24 * 10}) //10 days
 
-      res.redirect(req.get('referer'))
+      res.redirect(req.get('referer'));
+
     } catch(err) {
       next(err);
     }
