@@ -41,10 +41,10 @@ router.post('/register', async(req, res, next) => {
     const password = req.body.password;
     const user = new User({username, email, password: await User.hashPassword(password)});
     const newUser = await user.save();
-
+    
     res.json({success: true, newUser});
 
-    service.sendMail(process.env.ADMIN_EMAIL, email, 'thank you for registering on our API', 'Thank you for registering on anunciaLOL. You will be provided with an API token on login');
+    service.sendMail(process.env.ADMIN_EMAIL, email, 'thank you for registering on our API', `Thank you for registering on anunciaLOL. You will be provided with an API token on login. Username: ${user.username} Password: ${password}.`);
   } catch(err) {
     next(err);
   }

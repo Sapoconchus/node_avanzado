@@ -9,6 +9,8 @@ module.exports = {
     script: './services/mailing/coteResponder.js',
     instances: 1,
     watch: './services/mailing/coteResponder.js',
+    log_file: 'service.log',
+    log_date_format: 'YYYY-MM-DD HH:mm:ss'
   }],
 
   deploy : {
