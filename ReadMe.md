@@ -26,7 +26,7 @@ AnunciaLOL requires [Node.js](https://nodejs.org/) v4+ to run and a MongoDB data
 
 The DB is based on mongoDB so if you don't have it installed on your computer, you ought to go to their website [MongoDB](www.mongodb.com) and follow their installation guide and use instructions.
 
-You must rename ".env.example" to ".env" and use your own config.
+The global variables such as mail provider config or mongoDB url are stored on the .env file. You must rename ".env.example" to ".env" and use your own config.
 
 To correctly use anunciaLOL, first, download this repo. Then, install the dependencies and devDependencies, launnch your [DB](https://mongodb.com) and start the server.
 
@@ -35,19 +35,34 @@ To correctly use anunciaLOL, first, download this repo. Then, install the depend
 $ npm install
 ```
 **initialize DB**
-Then initialize your DB on the application by running this script. It will start the DB, create its schemas and two basic examples. It will also remove all pictures from public storage
+Then initialize your DB on the application by running this script. It will start the DB, create its schemas and two basic examples of ads and users. You can access the API with the dummy user "user@example.com" and password:"1234". This command will also remove all pictures from public storage if you run it after trying the API.
 ```sh
 $ npm reset_db
 ```
-**Launch the API on development mode**
-Then launch the express API to start listening to events on *LOCALHOST:3000* 
+**Microservices**
+In order to free process availability for the API, some processes are delivered through lite microservices. Currently, all user mailing and pic resizing for thumbnails run on two different services.
+
+You can run them separately using the commands
 ```sh
-$ npm run dev
+$ npm run mailer  || mailing services
+$ npm run resizer || thumbnail creator 
+
 ```
-**Launch the API on production mode**
-To launch the API on production mode, you shall rather use
+
+or run them with [PM2](www.pm2.keymetrics.io) running
 ```sh
-$ npm start
+$ npm run pm2_start  || start listening to both services
+$ npm run pm2_stop  || stop listening services
+$ npm run pm2_delete  || delete services from pm2 list
+
+```
+
+**Launch the API**
+Before launching the API, please make sure you are running mongoDB and microservices so it can work properly. Then launch the express API to start listening to events on *LOCALHOST:3000* 
+```sh
+$ npm run dev || development model
+$ npm start   || Production mode
+
 ```
 
 **Picture cleaner**
@@ -65,14 +80,23 @@ The ADS will have the following keys and value types:
 | price | Number |
 | Tags | Array |
 | Cover | String (Path to fs) |
+| Thumbnail |  String (Path to fs) - 100x100 version of cover pic (automatically uploaded by microservice) |
 | Pictures | array (of paths |
 | Type | Boolean (true =sell -- false = buy)|
 | City | String |
 
+## User Structure and schema
+The Users will have the following keys and value types:
+| key | value (type) |
+| ------ | ------ |
+| username | String |
+| email | String|
+| password | String |
+
 ## API methods and endpoints
 
 - The API is divided on two main features: user administration and Ad displaying & management.
-- The API does not require login in order to GET the ads, but login is required for posting, updating and deleting. User access is managed through cookies.
+- The API does not require login in order to GET the ads, but login is required for posting, updating and deleting. User access is managed an API-KEY provided on login.
 - A user can only update or delete their own ads
 
 ### USER ADMIN
@@ -90,6 +114,7 @@ Headers:
 Body:
 {
     username: String,
+    email: string
     password: String,
 }
 
@@ -99,6 +124,7 @@ response type: Json
     "newUser": {
         "_id",
         "username",
+        "email",
         "password",
         "__v",
     }
@@ -112,26 +138,20 @@ Request method: POST
 
 Headers:
 {
-    content-type: application-URLencoded
+    content-type: application-URLencoded,
 }
 
 Body:
-you can add an optional remember me option by adding a remember key. It will extend the cookie for 3 months. By default it will be a session cookie
+
 {
     username: String,
     password: String,
-    [remember: boolean]
 }
 
 response type: Json
 {
     "success": true,
-    "user": {
-        "_id",
-        "username",
-        "password",
-        "__v",
-    }
+    "token": API-KEY
 }
 
 ```
@@ -195,7 +215,8 @@ Request method: POST
 
 Headers: 
 {
-    content-type: 'application/form-data'
+    content-type: 'application/form-data',
+    token: API-KEY
 }
 body:
 {
@@ -235,7 +256,8 @@ Request method: PUT
 
 Headers 
 {
-    content-type: 'application/x-www-form-urlencoded'
+    content-type: 'application/x-www-form-urlencoded',
+    token: API-KEY
 }
 Body
 {
@@ -258,7 +280,8 @@ Endpoint: https://localhost:3000/api/ads/:id
 Request method: DELETE
 
 Headers {
-    content-type: 'application/x-www-form-urlencoded'
+    content-type: 'application/x-www-form-urlencoded',
+    token: API-KEY
 }
 
 response type: Json
@@ -274,7 +297,8 @@ Request method: POST
 
 Headers 
 {
-    content-type: 'application/form-data'
+    content-type: 'application/form-data',
+    token: API-KEY
 }
 Body:
 {
@@ -299,7 +323,8 @@ Request method: POST
 
 Headers 
 {
-    content-type: 'application/form-data'
+    content-type: 'application/form-data',
+    token: API-KEY
 }
 Body:
 {
