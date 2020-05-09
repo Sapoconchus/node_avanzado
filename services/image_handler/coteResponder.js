@@ -21,7 +21,7 @@ responder.on('create thumbnail', async (req) => {
       picture.resize(100, 100)
         .write(thumb);
     });
-
+    
   } catch(err) {
     return err;
   }

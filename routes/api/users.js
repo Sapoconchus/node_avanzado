@@ -13,8 +13,6 @@ router.post('/login', async(req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
   
-    console.log(email, password);
-  
     const user = await User.findOne({email});
   
     if (!user || !await bcrypt.compare(password, user.password)) {

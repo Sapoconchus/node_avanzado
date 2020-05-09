@@ -26,7 +26,7 @@ responder.on('send email', async (req) => {
     console.log('user on responder retrieved: ', user);
 
     await user.sendEmail(from, subject, body);
-
+    
   } catch(err) {
     return err;
   }

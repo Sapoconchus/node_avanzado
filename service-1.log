@@ -74,3 +74,50 @@ Hello! I'm[39m [37mmail deliverer[39m[90m#[39m[90mf20a2fde-4d56-45fa-9516-
 [39m
 mail deliverer > [35mservice[39m[32m.online[39m [37mmail deliverer[39m[90m#[39m[90m78983158-1624-4ed7-afee-491e6a07625a[39m on [34m8000[39m
 mail deliverer > [35mservice[39m[32m.online[39m [37msendEmail[39m[90m#[39m[90m1ba85cdc-8b12-40b0-a48f-7a08ebee8351[39m
+2020-05-09 21:34:14: connected to practica_intro_node
+2020-05-09 21:34:14: [37m
+Hello! I'm[39m [37mmail deliverer[39m[90m#[39m[90mec2ff274-526b-460d-90a1-f90aa5ef2804[39m on [34m8001[39m [37m
+========================
+[39m
+2020-05-09 21:44:49: emailer recieved:  mavidalma@gmail.com thank you for registering on our API Thank you for registering on anunciaLOL. You will be provided with an API token on login. Username: usertest Password: password. test@tester.con
+2020-05-09 21:44:49: user on responder retrieved:  {
+  _id: 5eb70830a72630264d850542,
+  username: 'usertest',
+  email: 'test@tester.con',
+  password: '$2b$10$1jlFVoaV0fXaZXDQIBDGhugCOl8bkkrZDjqzysKWoIcp0D5YvXnwi',
+  __v: 0
+}
+2020-05-09 21:48:41: mail deliverer > [35mservice[39m[32m.online[39m [37msendEmail[39m[90m#[39m[90m6353ae0b-b0fd-4ead-87f0-6080e1c1c535[39m
+2020-05-09 21:48:46: mail deliverer > [35mservice[39m[31m.offline[39m [37msendEmail[39m[90m#[39m[90m6353ae0b-b0fd-4ead-87f0-6080e1c1c535[39m
+2020-05-09 21:50:24: mail deliverer > [35mservice[39m[32m.online[39m [37msendEmail[39m[90m#[39m[90mba7e2125-9c6c-439a-bcf2-d1ade44d3089[39m
+2020-05-09 21:50:30: mail deliverer > [35mservice[39m[31m.offline[39m [37msendEmail[39m[90m#[39m[90mba7e2125-9c6c-439a-bcf2-d1ade44d3089[39m
+2020-05-09 21:52:50: mail deliverer > [35mservice[39m[32m.online[39m [37msendEmail[39m[90m#[39m[90m4dc999e0-72ae-4d3c-8fc4-290b9411b93a[39m
+2020-05-09 21:52:58: mail deliverer > [35mservice[39m[31m.offline[39m [37msendEmail[39m[90m#[39m[90m4dc999e0-72ae-4d3c-8fc4-290b9411b93a[39m
+2020-05-09 21:53:13: connected to practica_intro_node
+2020-05-09 21:53:13: [37m
+Hello! I'm[39m [37mmail deliverer[39m[90m#[39m[90m98b53b8d-da73-4709-9e5b-523c8ff1414a[39m on [34m8001[39m [37m
+========================
+[39m
+2020-05-09 21:54:11: mail deliverer > [35mservice[39m[32m.online[39m [37msendEmail[39m[90m#[39m[90m3142282b-01df-4c5d-8b2f-ffeeea4fdcab[39m
+2020-05-09 21:54:17: mail deliverer > [35mservice[39m[31m.offline[39m [37msendEmail[39m[90m#[39m[90m3142282b-01df-4c5d-8b2f-ffeeea4fdcab[39m
+2020-05-09 21:55:14: connected to practica_intro_node
+2020-05-09 21:55:14: [37m
+Hello! I'm[39m [37mmail deliverer[39m[90m#[39m[90m73be5801-2d75-4d31-a645-40cc0ba9b310[39m on [34m8001[39m [37m
+========================
+[39m
+2020-05-09 21:56:06: connected to practica_intro_node
+2020-05-09 21:56:07: [37m
+Hello! I'm[39m [37mmail deliverer[39m[90m#[39m[90m51c1c5de-32a7-4005-b07d-cfb77062494c[39m on [34m8001[39m [37m
+========================
+[39m
+2020-05-09 21:56:46: mail deliverer > [35mservice[39m[32m.online[39m [37msendEmail[39m[90m#[39m[90m050c1ea8-c7dc-48f9-a66e-749f2d11efb4[39m
+2020-05-09 21:56:55: mail deliverer > [35mservice[39m[31m.offline[39m [37msendEmail[39m[90m#[39m[90m050c1ea8-c7dc-48f9-a66e-749f2d11efb4[39m
+2020-05-09 21:57:52: mail deliverer > [35mservice[39m[32m.online[39m [37msendEmail[39m[90m#[39m[90m67d38b95-5f94-44bd-96c7-3ae8d695046f[39m
+2020-05-09 21:57:59: mail deliverer > [35mservice[39m[31m.offline[39m [37msendEmail[39m[90m#[39m[90m67d38b95-5f94-44bd-96c7-3ae8d695046f[39m
+2020-05-09 22:29:03: connected to practica_intro_node
+2020-05-09 22:29:03: [37m
+Hello! I'm[39m [37mmail deliverer[39m[90m#[39m[90ma34c1809-e2c3-4244-905e-2fd657e8a18d[39m on [34m8001[39m [37m
+========================
+[39m
+2020-05-09 22:29:14: mail deliverer > [35mservice[39m[32m.online[39m [37msendEmail[39m[90m#[39m[90m7f075566-fcd2-445b-ac0e-0db59b95e119[39m
+2020-05-09 22:29:19: mail deliverer > [35mservice[39m[31m.offline[39m [37msendEmail[39m[90m#[39m[90m7f075566-fcd2-445b-ac0e-0db59b95e119[39m
