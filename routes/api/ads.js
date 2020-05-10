@@ -8,6 +8,7 @@ const fs = require('fs');
 var path = require('path');
 const apiKeyProtected = require('../../lib/JWTAuth');
 const service = require('../../services/coteRequester');
+const msg = require('../../lib/mail_templates');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -112,7 +113,7 @@ router.post('/create', apiKeyProtected(), upload.fields([{name: 'cover', maxCoun
 
       res.json({success: true, ad:savedAd});
 
-      service.sendMail(process.env.ADMIN_EMAIL, mail, 'new ad created', 'the ad has been properly created'); 
+      service.sendMail(process.env.ADMIN_EMAIL, mail, msg.createAd.subject, msg.createAd.body); 
       req.files.cover ? service.createThumbnail(cover, thumbnail) : '';
     }
 

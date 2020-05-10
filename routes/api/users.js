@@ -6,6 +6,7 @@ const service = require('../../services/coteRequester');
 const User = require('../../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const msg = require('../../lib/mail_templates');
 
 router.post('/login', async(req, res, next) => {
   try {
@@ -43,7 +44,7 @@ router.post('/register', async(req, res, next) => {
     
     res.json({success: true, newUser});
 
-    service.sendMail(process.env.ADMIN_EMAIL, email, 'thank you for registering on our API', `Thank you for registering on anunciaLOL. You will be provided with an API token on login. Username: ${user.username} Password: ${password}.`);
+    service.sendMail(process.env.ADMIN_EMAIL, email, msg.register.subject, msg.register.body);
   } catch(err) {
     next(err);
   }
