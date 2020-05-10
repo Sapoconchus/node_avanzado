@@ -4,5 +4,12 @@
 	"ivalid user": "ivalid user",
 	"view": "view",
 	"Do": "Do",
-	"Documentation": "Documentation"
+	"Documentation": "Documentation",
+	"views": "views",
+	"documentation": "documentation",
+	"If you are reading this, it means that you have already downloaded our repo and you are checking oout the API": "If you are reading this, it means that you have already downloaded our repo and you are checking oout the API",
+	"You´ll find a brief visualization of cards on": "You´ll find a brief visualization of cards on",
+	"You have all the info you might need on": "You have all the info you might need on",
+	"And, of course, you can directly go to the API route \"/api\" and check the behaviour passing queries params to check the responses": "And, of course, you can directly go to the API route \"/api\" and check the behaviour passing queries params to check the responses",
+	"Go to view": "Go to view"
 }

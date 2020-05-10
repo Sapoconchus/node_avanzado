@@ -3,5 +3,12 @@
 	"ivalid user": "usuario inválido",
 	"view": "vista",
 	"Do": "DALE DON DALE",
-	"Documentation": "Documentación"
+	"Documentation": "Documentación",
+	"views": "views",
+	"documentation": "documentación",
+	"If you are reading this, it means that you have already downloaded our repo and you are checking oout the API": "Si estás leyendo esto es porque ya te has bajado nuestro repo y estás echándole un vistazo a la API",
+	"You´ll find a brief visualization of cards on": "Tienes una pequeña cisualización de tarjetas en",
+	"You have all the info you might need on": "Toda la info está disponible en",
+	"And, of course, you can directly go to the API route \"/api\" and check the behaviour passing queries params to check the responses": "Y, por supuesto, puedes ir directamente a la ruta de la API \"/api\" y probar cómo se comporta pasándole queries en la URL",
+	"Go to view": "Ir a vista"
 }

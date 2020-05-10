@@ -1,6 +1,22 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: white;
+}
+
+.logo {
+  font-size: 3rem;
+
+  display: block;
+  align-self: center;
+}
+.logo a {
+  text-decoration: none;
+  color: lightcoral;
+}
+
+.home-div {
+  margin-top: 25px;
 }
 
 a {
@@ -15,7 +31,7 @@ a {
   margin-top: 140px;
 }
 
-nav {
+.navbar {
   display: fixed;
   position: absolute;
   top: 0;
@@ -24,6 +40,7 @@ nav {
   padding: 10px;
   color: white;
   border-bottom: 1px solid white;
+
 }
 nav p {
   font-size: 1.25rem;
@@ -56,5 +73,16 @@ nav p {
 .pics-grid .ad-picture {
   max-width: 100%;
   margin: 15px auto;
+}
+
+ body .documentation {
+  margin-top: 50px;
+}
+
+/* footer styling*/
+
+footer {
+  position: absolute;
+  bottom: 0;
 }
 
