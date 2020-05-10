@@ -6,15 +6,12 @@ const service = require('../../services/coteRequester');
 const User = require('../../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const msg = require('../../lib/mail_templates');
 
 router.post('/login', async(req, res, next) => {
   try {
   
     const email = req.body.email;
     const password = req.body.password;
-  
-    console.log(email, password);
   
     const user = await User.findOne({email});
   
@@ -44,7 +41,7 @@ router.post('/register', async(req, res, next) => {
     
     res.json({success: true, newUser});
 
-    service.sendMail(process.env.ADMIN_EMAIL, email, msg.register.subject, msg.register.body);
+    service.sendMail(process.env.ADMIN_EMAIL, email, 'thank you for registering into anunciaLOL', `Thank you for registering on anunciaLOL. You will be provided with an API token on login. Username: "${username}" and Password: "${password}".`);
   } catch(err) {
     next(err);
   }

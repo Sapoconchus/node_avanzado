@@ -14,7 +14,6 @@ responder.on('create thumbnail', async (req) => {
   try {
     const path = './public/' + req.path;
     const thumb = './public/' + req.thumb;
-    console.log(path, thumb);
  
     jimp.read(path, (err, picture) => {
       if(err) throw err;

@@ -8,7 +8,6 @@ const fs = require('fs');
 var path = require('path');
 const apiKeyProtected = require('../../lib/JWTAuth');
 const service = require('../../services/coteRequester');
-const msg = require('../../lib/mail_templates');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -19,9 +18,6 @@ var storage = multer.diskStorage({
   }
 });
 const upload = multer({storage: storage});
-
-//const upload = multer({dest: './public/ad_pics/'})
-
 
 //show ads
 router.get('/', async(req, res, next) => {
@@ -93,7 +89,6 @@ router.get('/:id', async(req, res, next) => {
 router.post('/create', apiKeyProtected(), upload.fields([{name: 'cover', maxCount: 1}, {name: 'pictures', maxCount: 8}]), async function(req, res, next) {
   try {
     const adData =  req.body;
-    const title = req.body.title;
 
     if(!adData.title || !adData.price || !adData.type) {
 
@@ -114,7 +109,7 @@ router.post('/create', apiKeyProtected(), upload.fields([{name: 'cover', maxCoun
 
       res.json({success: true, ad:savedAd});
 
-      service.sendMail(process.env.ADMIN_EMAIL, mail, msg.createAd.subject, msg.createAd.body); 
+      service.sendMail(process.env.ADMIN_EMAIL, mail, `Your ad "${adData.title}" has been created`, 'Your ad has been properly created. Thank you for using our platform and good luck!'); 
       req.files.cover ? service.createThumbnail(cover, thumbnail) : '';
     }
 
@@ -130,20 +125,16 @@ router.put('/:id', apiKeyProtected(), async (req, res, next) => {
   try{
     const adData = req.body;
     const _id = req.params.id;
-    const user = req.apiAuthUserId;
+    const mail = req.apiAuthUserEmail;
       
     const ad = await Ad.findOne({_id});
 
-    if (ad.user === user) {
-      const updatedAd = await Ad.findOneAndUpdate(_id, adData, {new:true});
-      res.json({success: `${_id}`, changes: updatedAd});
+    const updatedAd = await Ad.findOneAndUpdate(_id, adData, {new:true});
 
-    } else {
-      const err = new Error('You have no permission to update this ad');
-      err.status = 401;
-      return next(err);
-    }
-        
+    res.json({success: `${_id}`, changes: updatedAd});
+
+    service.sendMail(process.env.ADMIN_EMAIL, mail, `Your ad "${ad.title}" has been updated`, 'Your ad has been properly update. Thank you for using our platform and good luck!'); 
+
   } catch(err) {
     next(err);
   }
@@ -153,18 +144,18 @@ router.put('/:id', apiKeyProtected(), async (req, res, next) => {
 router.post('/cover/:id', apiKeyProtected(), upload.single('cover'), async(req, res, next) => {
   try {
     const _id = req.params.id;
-    const cover = {'cover': 'ad_pics/' + req.file.filename};
+    const cover = 'ad_pics/' + req.file.filename;
+    const thumbnail = 'thumbnails/' + req.file.filename;
+    const update = {'cover': cover, 'thumbnail': thumbnail};
     const ad = await Ad.findOne({_id});
-    const user = req.apiAuthUserId;
+    const mail = req.apiAuthUserEmail;
 
-    if (ad.user === user) {
-      /*const updatedAd =*/ await Ad.findOneAndUpdate(_id, cover, {new:false});
-      res.json({success: true, ad: _id, path: cover});
-    } else {
-      const err = new Error('You have no permission to update this ad');
-      err.status = 401;
-      return next(err);
-    }
+    await Ad.findOneAndUpdate(_id, update, {new:true});
+    console.log('ad_pics/' + req.file.filename, 'thumbnails/' + req.file.filename);
+    res.json({success: true, ad: _id, cover: cover, thumbnail: thumbnail});
+    
+    service.sendMail(process.env.ADMIN_EMAIL, mail, `Your ad "${ad.title}" has been updated`, 'Your ad has been properly update. Thank you for using our platform and good luck!'); 
+    service.createThumbnail('ad_pics/' + req.file.filename, 'thumbnails/' + req.file.filename);
   
   } catch(err) {
     next(err);
@@ -177,19 +168,14 @@ router.post('/pics/:id', apiKeyProtected(), upload.array('pictures', 8), async(r
   try {
     //it overwrites ALL previous pictures with the ones posted. Might refactor
     const _id = req.params.id;
-    const ad = await Ad.findOne({_id});
     const pictures = {'pictures': req.files.map(item => 'ad_pics/' + item.filename)};
-    const user = req.apiAuthUserId;
+    const mail = req.apiAuthUserEmail;
 
+    const updatedAd = await Ad.findOneAndUpdate(_id, pictures, {new:true});
+      
+    res.json({success: true, Ad:_id, pictures: updatedAd.pictures});
+    service.sendMail(process.env.ADMIN_EMAIL, mail, `Your ad "${updatedAd.title}" has been updated`, 'Your ad has been properly update. Thank you for using our platform and good luck!'); 
 
-    if (ad.user === user) {
-      const updatedAd = await Ad.findOneAndUpdate(_id, pictures, {new:true});
-      res.json({success: true, Ad:_id, pictures: updatedAd.pictures});
-    } else {
-      const err = new Error('You have no permission to update this ad');
-      err.status = 401;
-      return next(err);
-    }
   } catch(err) {
     next(err);
   }
@@ -199,24 +185,20 @@ router.post('/pics/:id', apiKeyProtected(), upload.array('pictures', 8), async(r
 router.delete('/:id', apiKeyProtected(), async (req, res, next) => {
   try{
     const _id = req.params.id;
-    const user = req.apiAuthUserId;
+    const mail = req.apiAuthUserEmail;
     const ad = await Ad.findOne({_id});
     const cover = ad.cover;
     const pictures = ad.pictures;
     const thumbnail = ad.thumbnail;
     const allPics = [...pictures, cover, thumbnail];
         
-    if (ad.user === user) {
-      allPics.forEach(path => fs.unlinkSync('./public/' + path));
-      await Ad.deleteOne({_id});
+    allPics.forEach(path => fs.unlinkSync('./public/' + path));
+    await Ad.deleteOne({_id});
       
-      res.json({success: true, 'deleted': _id});
-    } else {
-      const err = new Error('You have no permission to update this ad');
-      err.status = 401;
-      return next(err);
-    }
-        
+    res.json({success: true, 'deleted': _id});
+
+    service.sendMail(process.env.ADMIN_EMAIL, mail, `Your ad "${ad.title}" has been deleted`, 'Your ad has been properly deleted. Thank you for have been using our platform'); 
+      
   } catch(err) {
     next(err);
   }
