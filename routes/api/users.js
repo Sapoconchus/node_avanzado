@@ -10,13 +10,10 @@ const msg = require('../../lib/mail_templates');
 
 router.post('/login', async(req, res, next) => {
   try {
-    console.log(req.body)
   
     const email = req.body.email;
     const password = req.body.password;
-  
-    console.log('login recieved: ', email, password);
-  
+    
     const user = await User.findOne({email});
   
     if (!user || !await bcrypt.compare(password, user.password)) {
@@ -26,9 +23,8 @@ router.post('/login', async(req, res, next) => {
       return;
     }
     const token = jwt.sign({_id: user._id, email: user.email}, process.env.JWT_SECRET, {expiresIn: '2d'});
-    console.log("server response: ", {success: true, token})
-    res.set('Access-Control-Allow-Origin', '*');
-    res.json({success: true, token});
+
+    res.send({success: true, token});
   
   } catch(err) {
     next(err);
@@ -44,7 +40,7 @@ router.post('/register', async(req, res, next) => {
     const user = new User({username, email, password: await User.hashPassword(password)});
     const newUser = await user.save();
 
-    res.set('Access-Control-Allow-Origin', '*');
+   // res.set('Access-Control-Allow-Origin', '*');
     res.json({success: true, newUser});
 
     service.sendMail(process.env.ADMIN_EMAIL, email, msg.register.subject, msg.register.body);

@@ -5,13 +5,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const cors = require('cors');
 
 var app = express();
-
-//connect mongoose for mongodb
-//require('./services/users/coteResponder');
-//require('./services/image_handler/coteResponder');
-//require('./services/mailing/coteResponder');
 
 const mongooseConnection = require('./lib/connectMongoose');
 
@@ -27,6 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));
+app.use(cors());
 
 //i18n init
 const i18n = require('./lib/i18nConfigure')(); //porque i18n exporta una función que configura i18n
