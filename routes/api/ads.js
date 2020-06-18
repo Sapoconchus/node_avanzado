@@ -93,6 +93,7 @@ router.get('/:id', async(req, res, next) => {
 router.post('/create', apiKeyProtected(), upload.fields([{name: 'cover', maxCount: 1}, {name: 'pictures', maxCount: 8}]), async function(req, res, next) {
   try {
     const adData =  req.body;
+    const title = adData.title; //gotta stay here to include it on the mail
 
     if(!adData.title || !adData.price || !adData.type) {
 
