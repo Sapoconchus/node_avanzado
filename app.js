@@ -16,6 +16,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
 app.engine('html', require('ejs').__express);
 
+app.use(cors());
 app.use(express.json({
   type: ['application/json', 'text/plain']
 }));
@@ -23,7 +24,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));
-app.use(cors());
+
 
 //i18n init
 const i18n = require('./lib/i18nConfigure')(); //porque i18n exporta una función que configura i18n
