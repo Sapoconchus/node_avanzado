@@ -41,7 +41,7 @@ router.get('/', async(req, res, next) => {
     if(req.query.price) {
       const priceSplited = req.query.price.split('-');
       priceSplited[0] > 0 ? query.price = {$gt: priceSplited[0]} : query.price = {$gt: 0};
-      priceSplited[1] > 0 ? query.price.$lt = priceSplited[1] : '';
+      priceSplited[1] > 0 ? query.price.$lte = priceSplited[1] : '';
     }
 
     const limit = parseInt(req.query.limit);
