@@ -123,21 +123,14 @@ router.post('/create', apiKeyProtected(), upload.fields([{name: 'cover', maxCoun
 
 router.put('/:id', apiKeyProtected(), async (req, res, next) => {
   try{
+    
     const adData = req.body;
     const _id = req.params.id;
-    const user = req.apiAuthUserId;
       
     const ad = await Ad.findOne({_id});
 
-    if (ad.user === user) {
-      const updatedAd = await Ad.findOneAndUpdate(_id, adData, {new:true});
-      res.json({success: `${_id}`, changes: updatedAd});
-
-    } else {
-      const err = new Error('You have no permission to update this ad');
-      err.status = 401;
-      return next(err);
-    }
+    const updatedAd = await Ad.findOneAndUpdate(_id, adData, {new:true});
+    res.json({success: `${_id}`, changes: updatedAd});
         
   } catch(err) {
     next(err);
@@ -149,18 +142,11 @@ router.post('/cover/:id', apiKeyProtected(), upload.single('cover'), async(req, 
   try {
     const _id = req.params.id;
     const cover = {'cover': 'ad_pics/' + req.file.filename};
-    const ad = await Ad.findOne({_id});
-    const user = req.apiAuthUserId;
+    const ad = await Ad.findOne({_id});;
 
-    if (ad.user === user) {
-      /*const updatedAd =*/ await Ad.findOneAndUpdate(_id, cover, {new:false});
-      res.json({success: true, ad: _id, path: cover});
-    } else {
-      const err = new Error('You have no permission to update this ad');
-      err.status = 401;
-      return next(err);
-    }
-  
+    /*const updatedAd =*/ await Ad.findOneAndUpdate(_id, cover, {new:false});
+    res.json({success: true, ad: _id, path: cover});
+
   } catch(err) {
     next(err);
   }
